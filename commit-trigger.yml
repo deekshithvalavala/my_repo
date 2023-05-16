@@ -1,0 +1,22 @@
+jobs:
+- name: newCommit
+  plan:
+  - get: repo
+    trigger: true
+  - config:
+      image_resource:
+        name: ""
+        source:
+          repository: busybox
+        type: registry-image
+      platform: linux
+      run:
+        args:
+        - new commit detected
+        path: echo
+    task: sample-task
+resources:
+- name: repo
+  source:
+    uri: https://github.com/deekshithvalavala/my_repo.git
+  type: git
