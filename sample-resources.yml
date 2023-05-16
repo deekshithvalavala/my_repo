@@ -1,0 +1,25 @@
+resources:
+ - name: repo
+   type: git
+   source:
+     uri: https://github.com/concourse/examples.git
+
+jobs:
+ - name: sample
+   plan:
+    - get: repo
+      trigger: true
+    - task: sample-task
+      config:
+        platform: linux
+        image_resource: 
+          type: registry-image
+          source:
+            repository: busybox
+        inputs:
+         - name: repo    
+        run:
+          path: cat
+          args: ["repo/README.md"]  
+       
+   

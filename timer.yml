@@ -1,0 +1,21 @@
+resources:
+ - name: my-timer
+   type: time
+   source:
+     interval: 2m
+
+jobs:
+ - name: hello-world-job-timer
+   plan: 
+    - get: my-timer
+      trigger: true
+    - task: hello-world-task
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source: 
+            repository: busybox
+        run:
+          path: echo
+          args: ["Hello world!"]
